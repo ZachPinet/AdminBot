@@ -7,7 +7,6 @@ from database import Database
 from help import HelpCog
 from welcome import WelcomeCog
 from miscellaneous import MiscCog
-logger = settings.logging.getLogger("bot")
             
 # This has the core functionalities of the bot.
 def main():
@@ -34,7 +33,6 @@ def main():
     @bot.event
     async def on_ready():
         print("Bot is online")
-        logger.info(f"User: {bot.user} (ID: {bot.user.id})")
 
     # This is called when the bot is added to a new server.
     @bot.event

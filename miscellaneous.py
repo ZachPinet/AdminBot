@@ -1,4 +1,5 @@
 from discord.ext import commands
+import discord
 import re
 
 # This creates the Misc cog to group together welcome commands.
@@ -8,10 +9,10 @@ class MiscCog(commands.Cog):
         self.db = db
 
     # This is the ping command. It returns the bot latency.
-    @commands.command(aliases=['p'])
-    async def ping(self, ctx):
+    @discord.app_commands.command(name="ping", description="Check the bot's latency")
+    async def ping(self, interaction: discord.Interaction):
         latency = int((self.bot.latency * 1000) + 0.5)
-        await ctx.send(f"pong! ({latency}ms)")
+        await interaction.response.send_message(f"pong! ({latency}ms)")
     
     # This checks if the server is in the DB, and adds it if it's not.
     @commands.command(aliases=['check', 'cs'])

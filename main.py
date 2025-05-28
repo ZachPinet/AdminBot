@@ -25,14 +25,21 @@ def main():
     prefix = get_prefix
     bot = commands.Bot(command_prefix=prefix, intents=intents)
     bot.remove_command('help')
-    bot.add_cog(HelpCog(bot, db))
-    bot.add_cog(MiscCog(bot, db))
-    bot.add_cog(WelcomeCog(bot, db))
 
     # This brings the bot online when the main function is run.
     @bot.event
     async def on_ready():
         print("Bot is online")
+        await bot.add_cog(HelpCog(bot, db))
+        await bot.add_cog(MiscCog(bot, db))
+        await bot.add_cog(WelcomeCog(bot, db))
+
+        # Sync slash commands
+        try:
+            synced = await bot.tree.sync()
+            print(f"Synced {len(synced)} command(s)")
+        except Exception as e:
+            print(f"Failed to sync commands: {e}")
 
     # This is called when the bot is added to a new server.
     @bot.event
